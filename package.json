@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-core/register \"specs/**/*@(.js|.jsx)\"",
     "start": "nodemon --exec babel-node server/index.js",
     "lint": "eslint src"
   },
@@ -22,15 +22,15 @@
     "express-jwt": "^5.1.0",
     "jsonwebtoken": "^7.2.1",
     "morgan": "^1.7.0",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0",
-    "pg-promise": "^3.2.3"
-  },
-  "devDependencies": {
+    "pg-promise": "^3.2.3",
+     "chai": "^3.5.0",
     "eslint": "^3.12.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.8.0"
+    "eslint-plugin-react": "^6.8.0",
+    "mocha": "^3.2.0",
+    "supertest": "^2.0.1",
+    "supertest-as-promised": "^4.0.2"
   }
 }
