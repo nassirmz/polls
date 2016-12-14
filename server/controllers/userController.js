@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   createUser(req, res, next) {
-    const queryStr = 'Insert into users (name, email, password) values ($1, $2, $3) returning id;';
+    const queryStr = 'Insert into users (name, email, password) values ($1, $2, $3) returning id, name, email;';
     const { name, email, password } = req.body;
     const hashedPwd = helpers.hashPassword(password);
     db.query(queryStr, [name, email, hashedPwd])
