@@ -10,7 +10,6 @@ module.exports = {
     const saltRounds = 10;
     bcrypt.hash(password, saltRounds)
       .then((hashedPwd) => {
-        console.log('hashedPWd', hashedPwd);
         return db.query(queryStr, [name, email, hashedPwd]);
       })
       .then((rows) => {
@@ -21,16 +20,18 @@ module.exports = {
       });
   },
   loginUser(req, res, next) {
-    const queryStr = 'Select * from users where name = $1 and email = $2 and password = $3;';
+    const queryStr = 'Select * from users where name = $1 and email = $2;';
     const { name, password, email } = req.body;
-    const hashedPwd = helpers.hashPassword(password);
-    db.query(queryStr, [name, email, hashedPwd])
+    db.query(queryStr, [name, email])
       .then((rows) => {
-        if (rows.length === 0 || rows[0].password !== hashedPwd) {
-          return next(new Error('Invalid credentials'));
+        return bcrypt.compare(password, rows[0].password);
+      })
+      .then((result) => {
+        if (result === true) {
+          const token = jwt.sign({ name, email }, 'querty098');
+          return res.json({ name, email, token });
         }
-        const token = jwt.sign({ name, email }, 'mynameitdom');
-        return res.json({ name, email, token });
+        return res.status(401).json(new Error('Invalid credentials'));
       })
       .catch((err) => {
         next(err);
@@ -40,14 +41,15 @@ module.exports = {
     const queryStr = 'delete from users where email = $1 and name = $2 and password = $3 returning name, email;';
     const { name, email, password } = req.body;
     const hashedPwd = helpers.hashPassword(password);
-    console.log(hashedPwd, 'hashedPwd', req.body);
     db.query(queryStr, [email, name, hashedPwd])
       .then((rows) => {
-        console.log(rows, 'Its Not deleting. I dont no why');
         res.status(202).json(rows[0]);
       })
       .catch((err) => {
         next(err);
       });
+  },
+  logoutUser(req, res) {
+    res.redirect('/');
   },
 };
