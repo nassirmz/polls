@@ -6,4 +6,6 @@ module.exports = (app) => {
     .delete(user.deleteUser);
   app.route('/users/login')
     .post(user.loginUser);
+  app.route('/users/logout')
+    .get(user.logoutUser);
 };
