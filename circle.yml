@@ -3,11 +3,9 @@ dependencies:
     - npm install -g mocha
     - npm install -g nodemon
     - npm install -g babel-cli
+
 machine:
   timezone:
     America/Los_Angeles #
   environment:
     DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
-  hosts:
-    circlehost: 127.0.0.1
-    dev.mycompany.com: 127.0.0.1
