@@ -3,7 +3,7 @@ const request = require('supertest-as-promised');
 const app = require('./../../server/server');
 
 // User Creation test
-describe('Account creation', () => {
+describe('User creation', () => {
   const user = {
     name: 'test',
     email: 'test@test.com',
@@ -24,30 +24,29 @@ describe('Account creation', () => {
     request(app)
       .post('/users')
       .send(user)
-      .expect(200, (err, res) => {
-        if (err) {
-          return done(err);
-        }
-        expect(res.body[0].email).to.equal(user.email);
+      .expect(201)
+      .then(() => {
         return done();
       });
   });
 });
 
 describe('User login', () => {
-  const user = {
+  const user1 = {
     name: 'test1',
-    email: 'test1@tes.com',
+    email: 'test1@test.com',
     password: 'test1',
+  };
+  const user2 = {
+    name: 'test2',
+    email: 'test2@test.com',
+    password: 'test2',
   };
   beforeEach((done) => {
     request(app)
       .post('/users')
-      .send(user)
-      .end((err) => {
-        if (err) {
-          return done(err);
-        }
+      .send(user1)
+      .then(() => {
         return done();
       });
   });
@@ -55,15 +54,19 @@ describe('User login', () => {
   it('should login existing users', (done) => {
     request(app)
       .post('/users/login')
-      .send(user)
+      .send(user1)
       .expect(302)
-      .end(done);
+      .then(() => {
+        return done();
+      });
   });
   it('should not login non existing users', (done) => {
     request(app)
       .post('users/login')
-      .send({ name: 'test2', email: 'test2@test.com', password: 'test2' })
-      .expect(401)
-      .end(done);
+      .send(user2)
+      .expect(404)
+      .then(() => {
+        return done();
+      });
   });
 });
