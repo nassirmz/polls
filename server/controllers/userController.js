@@ -12,7 +12,8 @@ module.exports = {
         return db.query(queryStr, [name, email, hashedPwd]);
       })
       .then((rows) => {
-        res.status(201).json(rows);
+        const token = jwt.sign({ email }, 'querty098');
+        return res.header('Auth', token).json(rows[0]);
       })
       .catch((err) => {
         next(err);
@@ -31,10 +32,9 @@ module.exports = {
       .then((result) => {
         if (result === true) {
           const token = jwt.sign({ email }, 'querty098');
-          return res.status(302).json({ email, token });
+          return res.status(302).header('Auth', token).json({ email });
         }
         return next({ status: 401, message: 'Invalid Crendentials' });
-        // return res.status(401).json(new Error('Invalid credentials'));
       })
       .catch((err) => {
         next(err);
