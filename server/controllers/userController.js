@@ -41,9 +41,18 @@ module.exports = {
       });
   },
   deleteUser(req, res, next) {
-    const queryStr1 = 'delete from users where email = $1;';
-    const queryStr2 = 'Select * from users where email = $1;';
-    const { name, password } = req.body;
+    const queryStr = 'delete from users where email = $1;';
+    const { email } = req.body;
+    db.query(queryStr, [email])
+      .then((rows) => {
+        if (rows.length === 0) {
+          return next({ status: 404, message: 'User not found' });
+        }
+        return res.json(rows[0]);
+      })
+      .catch((err) => {
+        next(err);
+      });
   },
   logoutUser(req, res) {
     res.redirect('/');
