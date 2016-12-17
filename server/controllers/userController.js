@@ -1,5 +1,4 @@
 const db = require('../db');
-const helpers = require('../utils/helpers.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -13,41 +12,38 @@ module.exports = {
         return db.query(queryStr, [name, email, hashedPwd]);
       })
       .then((rows) => {
-        res.json(rows);
+        res.status(201).json(rows);
       })
       .catch((err) => {
         next(err);
       });
   },
   loginUser(req, res, next) {
-    const queryStr = 'Select * from users where name = $1 and email = $2;';
-    const { name, password, email } = req.body;
-    db.query(queryStr, [name, email])
+    const queryStr = 'Select * from users where email = $1;';
+    const { email, password } = req.body;
+    db.query(queryStr, [email])
       .then((rows) => {
+        if (rows.length === 0) {
+          return next({ status: 401, message: 'Invalid Crendentials' });
+        }
         return bcrypt.compare(password, rows[0].password);
       })
       .then((result) => {
         if (result === true) {
-          const token = jwt.sign({ name, email }, 'querty098');
-          return res.json({ name, email, token });
+          const token = jwt.sign({ email }, 'querty098');
+          return res.status(302).json({ email, token });
         }
-        return res.status(401).json(new Error('Invalid credentials'));
+        return next({ status: 401, message: 'Invalid Crendentials' });
+        // return res.status(401).json(new Error('Invalid credentials'));
       })
       .catch((err) => {
         next(err);
       });
   },
   deleteUser(req, res, next) {
-    const queryStr = 'delete from users where email = $1 and name = $2 and password = $3 returning name, email;';
-    const { name, email, password } = req.body;
-    const hashedPwd = helpers.hashPassword(password);
-    db.query(queryStr, [email, name, hashedPwd])
-      .then((rows) => {
-        res.status(202).json(rows[0]);
-      })
-      .catch((err) => {
-        next(err);
-      });
+    const queryStr1 = 'delete from users where email = $1;';
+    const queryStr2 = 'Select * from users where email = $1;';
+    const { name, password } = req.body;
   },
   logoutUser(req, res) {
     res.redirect('/');
