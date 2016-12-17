@@ -3,6 +3,8 @@ dependencies:
     - npm install -g mocha
     - npm install -g nodemon
     - npm install -g babel-cli
+    - createdb pollsDigest
+    - psql -f ./server/schema.sql
 
 machine:
   timezone:
