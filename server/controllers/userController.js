@@ -13,14 +13,14 @@ module.exports = {
       })
       .then((rows) => {
         const token = jwt.sign({ email }, 'querty098');
-        return res.header('Auth', token).json(rows[0]);
+        return res.status(201).header('Auth', token).json(rows[0]);
       })
       .catch((err) => {
         next(err);
       });
   },
   loginUser(req, res, next) {
-    const queryStr = 'Select * from users where email = $1;';
+    const queryStr = 'select * from users where email = $1;';
     const { email, password } = req.body;
     db.query(queryStr, [email])
       .then((rows) => {
@@ -31,7 +31,7 @@ module.exports = {
       })
       .then((result) => {
         if (result === true) {
-          const token = jwt.sign({ email }, 'querty098');
+          const token = jwt.sign(email, 'querty098');
           return res.status(302).header('Auth', token).json({ email });
         }
         return next({ status: 401, message: 'Invalid Crendentials' });
@@ -41,7 +41,7 @@ module.exports = {
       });
   },
   deleteUser(req, res, next) {
-    const queryStr = 'delete from users where email = $1;';
+    const queryStr = 'delete from users where email = $1 returning name, email;';
     const { email } = req.body;
     db.query(queryStr, [email])
       .then((rows) => {
@@ -56,5 +56,24 @@ module.exports = {
   },
   logoutUser(req, res) {
     res.redirect('/');
+  },
+  // check authentication middleware. it also give a user property to request object
+  checkAuth(req, res, next) {
+    const token = req.get('Auth') || '';
+    console.log('token', token);
+    const { email } = jwt.verify(token, 'querty098');
+    // second layer identification
+    console.log('email', email);
+    const queryStr = 'select * from users where email = $1;';
+    db.query(queryStr, [email])
+      .then((rows) => {
+        if (rows.length === 0) {
+          return next({ status: 401, message: 'Unauthroized access' });
+        }
+        return next();
+      })
+      .catch((err) => {
+        res.status(401).send(err);
+      });
   },
 };

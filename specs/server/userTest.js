@@ -1,4 +1,3 @@
-const expect = require('chai').expect;
 const request = require('supertest-as-promised');
 const app = require('./../../server/server');
 
