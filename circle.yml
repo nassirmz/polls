@@ -1,6 +1,8 @@
 dependencies:
   pre:
     - npm install -g mocha
+    - npm install -g nodemon
+    - npm install -g babel-node
 machine:
   timezone:
     America/Los_Angeles #
