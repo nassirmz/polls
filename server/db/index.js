@@ -2,7 +2,7 @@ const promise = require('bluebird');
 
 const options = {
   promiseLib: promise,
-  pgFormatting: true
+  pgFormatting: true,
 };
 
 const pgp = require('pg-promise')(options);
