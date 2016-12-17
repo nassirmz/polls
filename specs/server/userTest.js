@@ -61,7 +61,7 @@ describe('User login', () => {
   });
   it('should not login non existing users', (done) => {
     request(app)
-      .post('users/login')
+      .post('/users/login')
       .send(user2)
       .expect(404)
       .then(() => {
