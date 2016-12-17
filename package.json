@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register \"specs/**/*@(.js|.jsx)\"",
+    "pretest": "npm start",
     "start": "nodemon --exec babel-node server/index.js",
     "lint": "eslint src"
   },
