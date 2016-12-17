@@ -63,7 +63,7 @@ describe('User login', () => {
     request(app)
       .post('/users/login')
       .send(user2)
-      .expect(404)
+      .expect(401)
       .then(() => {
         return done();
       });
