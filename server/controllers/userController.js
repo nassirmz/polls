@@ -3,22 +3,20 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 module.exports = {
-  createUser(req, res, next) {
+  createUserController(user) {
     const queryStr = 'Insert into users (name, email, password) values ($1, $2, $3) returning id, name, email;';
-    const { name, email, password } = req.body;
+    const { name, email, password } = user;
     const saltRounds = 10;
-    bcrypt.hash(password, saltRounds)
+    return bcrypt.hash(password, saltRounds)
       .then((hashedPwd) => {
         return db.query(queryStr, [name, email, hashedPwd]);
       })
       .then((rows) => {
-        const token = jwt.sign({ email }, 'querty098');
-        return res.status(201).header('Auth', token).json(rows[0]);
-      })
-      .catch((err) => {
-        next(err);
+        console.log(rows[0]);
+        return rows[0];
       });
   },
+
   loginUser(req, res, next) {
     const queryStr = 'select * from users where email = $1;';
     const { email, password } = req.body;
