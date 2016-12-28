@@ -1,4 +1,4 @@
-const user = require('../controllers/userController');
+const user = require('../requestHandlers/userRequestHandler');
 
 module.exports = (app) => {
   app.route('/users')

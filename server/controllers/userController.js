@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 module.exports = {
-  createUserController(user) {
+  createUserController(user, next) {
     const queryStr = 'Insert into users (name, email, password) values ($1, $2, $3) returning id, name, email;';
     const { name, email, password } = user;
     const saltRounds = 10;
@@ -14,7 +14,8 @@ module.exports = {
       .then((rows) => {
         console.log(rows[0]);
         return rows[0];
-      });
+      })
+      .catch(next);
   },
 
   loginUser(req, res, next) {
@@ -38,23 +39,23 @@ module.exports = {
         next(err);
       });
   },
-  deleteUser(req, res, next) {
+
+  deleteUserController(userEmail, next) {
     const queryStr = 'delete from users where email = $1 returning name, email;';
-    const { email } = req.body;
-    db.query(queryStr, [email])
+    db.query(queryStr, [userEmail])
       .then((rows) => {
         if (rows.length === 0) {
           return next({ status: 404, message: 'User not found' });
         }
-        return res.json(rows[0]);
+        return rows[0];
       })
-      .catch((err) => {
-        next(err);
-      });
+      .catch(next);
   },
+
   logoutUser(req, res) {
     res.redirect('/');
   },
+
   // check authentication middleware. it also give a user property to request object
   checkAuth(req, res, next) {
     const token = req.get('Auth') || '';
