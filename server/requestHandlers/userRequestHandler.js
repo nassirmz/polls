@@ -35,4 +35,17 @@ module.exports = {
   logoutUser(req, res) {
     res.redirect('/');
   },
+
+  checkAuth(req, res, next) {
+    const token = req.get('Auth') || '';
+    const { email } = jwt.verify(token, 'querty098');
+    controllers.checkAuthController(email)
+      .then((result) => {
+        if (result.length === 0) {
+          return next({ status: 401, message: 'Unauthorized Access' });
+        }
+        return next();
+      })
+      .catch(next);
+  },
 };

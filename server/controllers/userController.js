@@ -44,22 +44,11 @@ module.exports = {
   },
 
   // check authentication middleware. it also give a user property to request object
-  checkAuth(req, res, next) {
-    const token = req.get('Auth') || '';
-    console.log('token', token);
-    const { email } = jwt.verify(token, 'querty098');
-    // second layer identification
-    console.log('email', email);
+  checkAuthController(userEmail) {
     const queryStr = 'select * from users where email = $1;';
-    db.query(queryStr, [email])
+    return db.query(queryStr, [userEmail])
       .then((rows) => {
-        if (rows.length === 0) {
-          return next({ status: 401, message: 'Unauthroized access' });
-        }
-        return next();
-      })
-      .catch((err) => {
-        res.status(401).send(err);
+        return rows;
       });
   },
 };
