@@ -21,20 +21,17 @@ module.exports = {
     return db.query(queryStr, [userEmail])
       .then((rows) => {
         if (rows.length === 0) {
-          console.log(rows, 'rows');
           return next({ status: 404, message: 'User not found' });
         }
-        console.log(rows[0].email);
         return rows[0];
       })
       .catch(next);
   },
 
-
-  loginUser(req, res, next) {
+  loginUserController(user, next) {
     const queryStr = 'select * from users where email = $1;';
-    const { email, password } = req.body;
-    db.query(queryStr, [email])
+    const { email, password } = user;
+    return db.query(queryStr, [email])
       .then((rows) => {
         if (rows.length === 0) {
           return next({ status: 401, message: 'Invalid Crendentials' });
@@ -42,19 +39,8 @@ module.exports = {
         return bcrypt.compare(password, rows[0].password);
       })
       .then((result) => {
-        if (result === true) {
-          const token = jwt.sign(email, 'querty098');
-          return res.status(302).header('Auth', token).json({ email });
-        }
-        return next({ status: 401, message: 'Invalid Crendentials' });
-      })
-      .catch((err) => {
-        next(err);
+        return result;
       });
-  },
-
-  logoutUser(req, res) {
-    res.redirect('/');
   },
 
   // check authentication middleware. it also give a user property to request object
