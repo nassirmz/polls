@@ -8,6 +8,7 @@ describe('User creation', () => {
     email: 'test@test.com',
     password: 'test',
   };
+
   beforeEach((done) => {
     request(app)
       .delete('/users')
@@ -19,6 +20,7 @@ describe('User creation', () => {
         return done();
       });
   });
+
   it('should create a new user', (done) => {
     request(app)
       .post('/users')
@@ -41,11 +43,24 @@ describe('User login', () => {
     email: 'test2@test.com',
     password: 'test2',
   };
+
   beforeEach((done) => {
     request(app)
       .post('/users')
       .send(user1)
       .then(() => {
+        return done();
+      });
+  });
+
+  afterEach((done) => {
+    request(app)
+      .delete('/users')
+      .send(user1)
+      .end((err) => {
+        if (err) {
+          return done(err);
+        }
         return done();
       });
   });
@@ -59,6 +74,7 @@ describe('User login', () => {
         return done();
       });
   });
+
   it('should not login non existing users', (done) => {
     request(app)
       .post('/users/login')
