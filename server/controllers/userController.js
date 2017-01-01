@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 module.exports = {
-  createUserController(user, next) {
+  createUserController(user) {
     const queryStr = 'Insert into users (name, email, password) values ($1, $2, $3) returning id, name, email;';
     const { name, email, password } = user;
     const saltRounds = 10;
@@ -12,11 +12,24 @@ module.exports = {
         return db.query(queryStr, [name, email, hashedPwd]);
       })
       .then((rows) => {
-        console.log(rows[0]);
+        return rows[0];
+      });
+  },
+
+  deleteUserController(userEmail, next) {
+    const queryStr = 'delete from users where email = $1 returning name, email;';
+    return db.query(queryStr, [userEmail])
+      .then((rows) => {
+        if (rows.length === 0) {
+          console.log(rows, 'rows');
+          return next({ status: 404, message: 'User not found' });
+        }
+        console.log(rows[0].email);
         return rows[0];
       })
       .catch(next);
   },
+
 
   loginUser(req, res, next) {
     const queryStr = 'select * from users where email = $1;';
@@ -38,18 +51,6 @@ module.exports = {
       .catch((err) => {
         next(err);
       });
-  },
-
-  deleteUserController(userEmail, next) {
-    const queryStr = 'delete from users where email = $1 returning name, email;';
-    db.query(queryStr, [userEmail])
-      .then((rows) => {
-        if (rows.length === 0) {
-          return next({ status: 404, message: 'User not found' });
-        }
-        return rows[0];
-      })
-      .catch(next);
   },
 
   logoutUser(req, res) {
