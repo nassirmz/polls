@@ -1,6 +1,6 @@
-const db = require('../db');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
+const db = require('../db');
 
 module.exports = {
   createUserController(user) {
