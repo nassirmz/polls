@@ -22,7 +22,7 @@ module.exports = {
 
   loginUser(req, res, next) {
     const token = jwt.sign({ email: req.body.email }, 'querty098');
-    controllers.loginUserController(req.body)
+    controllers.loginUserController(req.body, next)
       .then((result) => {
         if (result === true) {
           return res.status(302).header('Auth', token).json(req.body.name);
