@@ -7,13 +7,13 @@ class App extends Component {
     return (
       <Navbar>
         <Navbar.Header>
-          <Navbar.Brand>
-            <a href="#">POLLS DIGEST</a>
+          <Navbar.Brand className="header-column">
+            <p>POLLS DIGEST</p>
           </Navbar.Brand>
         </Navbar.Header>
-        <Nav pullRight>
-          <NavItem eventKey={1} href="#">Link</NavItem>
-          <NavItem eventKey={2} href="#">Link</NavItem>
+        <Nav pullRight className="header-column">
+          <NavItem eventKey={1} href="#">Register</NavItem>
+          <NavItem eventKey={2} href="#">Sign In</NavItem>
         </Nav>
       </Navbar>
     );
