@@ -12,7 +12,7 @@ class App extends Component {
           </Navbar.Brand>
         </Navbar.Header>
         <Nav pullRight className="header-column">
-          <NavItem eventKey={1} href="#">Register</NavItem>
+          <NavItem eventKey={1} href="#">Sign Up</NavItem>
           <NavItem eventKey={2} href="#">Sign In</NavItem>
         </Nav>
       </Navbar>
