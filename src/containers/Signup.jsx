@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Col, FormControl, Button, ControlLabel } from 'react-bootstrap';
 
-class Register extends Component {
+class Signup extends Component {
   render() {
     return (
       <Form horizontal>
@@ -44,4 +44,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default Signup;
