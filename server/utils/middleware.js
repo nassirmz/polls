@@ -8,5 +8,5 @@ module.exports = (app, express) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static(path.join(__dirname, '/../../public')));
-  app.use(expressJWT({ secret: 'mynameistom' }).unless({ path: ['/signup', '/signin', '/'] }));
+  app.use(expressJWT({ secret: 'mynameistom' }).unless({ path: ['/users', '/users/login', '/'] }));
 };
