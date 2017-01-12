@@ -1,44 +1,27 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col, FormControl, Button, ControlLabel } from 'react-bootstrap';
+import { Form, FormGroup, Col, FormControl, Button } from 'react-bootstrap';
 
 class Signup extends Component {
   render() {
     return (
-      <Col className="auth-container" sm={6} smOffset={3}>
+      <Col className="auth-container" sm={4} smOffset={4}>
         <Form horizontal>
-          <FormGroup controlId="formHorizontalEmail">
-            <Col componentClass={ControlLabel} sm={2}>
-              Username
-            </Col>
-            <Col sm={10}>
-              <FormControl type="text" />
-            </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formHorizontalEmail">
-            <Col componentClass={ControlLabel} sm={2}>
-              Email
-            </Col>
-            <Col sm={10}>
-              <FormControl type="email" />
-            </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formHorizontalPassword">
-            <Col componentClass={ControlLabel} sm={2}>
-              Password
-            </Col>
-            <Col sm={10}>
-              <FormControl type="password" />
-            </Col>
+          <FormGroup>
+            <FormControl type="text" placeholder="Name" />
           </FormGroup>
 
           <FormGroup>
-            <Col smOffset={2} sm={10}>
-              <Button type="submit">
-                Sign in
-              </Button>
-            </Col>
+            <FormControl type="email" placeholder="Email" />
+          </FormGroup>
+
+          <FormGroup>
+            <FormControl type="password" placeholder="Password" />
+          </FormGroup>
+
+          <FormGroup>
+            <Button type="submit" block>
+              Sign in
+            </Button>
           </FormGroup>
         </Form>
       </Col>
