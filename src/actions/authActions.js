@@ -18,13 +18,9 @@ export function authFailure(errorMessage) {
   };
 }
 
-export function signup(name, email, password) {
+export function signup(userCredentials) {
   return (dispatch) => {
-    axios.post('/users', {
-      name,
-      email,
-      password,
-    })
+    axios.post('/users', userCredentials)
     .then((resp) => {
       window.localStorage.setItem('Auth', resp.headers.auth);
       dispatch(authSuccess(resp.data.username));
