@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import { Navbar, Nav, NavItem} from 'react-bootstrap';
+// import { Link } from 'react-router';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 class App extends Component {
   render() {
@@ -12,12 +12,8 @@ class App extends Component {
           </Navbar.Brand>
         </Navbar.Header>
         <Nav pullRight className="header-column">
-          <NavItem>
-            <Link to="/signup">Sign Up</Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/signin">Sign In</Link>
-          </NavItem>
+          <NavItem href="#/signup">Sign Up</NavItem>
+          <NavItem href="#/signin">Sign In</NavItem>
         </Nav>
       </Navbar>
     );
