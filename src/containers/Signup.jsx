@@ -1,26 +1,40 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Form, FormGroup, Col, FormControl, Button } from 'react-bootstrap';
+import { Field, reduxForm } from 'redux-form';
+
+import { signup } from '../actions/authActions';
+
+const form = reduxForm({
+  form: 'signup',
+});
 
 class Signup extends Component {
+  handleFormSubmit = (userCredentials) => {
+    const { dispatch } = this.props;
+    dispatch(signup(userCredentials));
+  }
+
   render() {
+    const { handleSubmit } = this.props;
     return (
       <Col className="auth-container" sm={4} smOffset={4}>
-        <Form horizontal>
+        <Form horizontal onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <FormGroup>
-            <FormControl type="text" placeholder="Name" />
+            <Field name="name" component="input" className="form-control" type="text" placeholder="Name" />
           </FormGroup>
 
           <FormGroup>
-            <FormControl type="email" placeholder="Email" />
+            <Field name="email" component="input" className="form-control" type="email" placeholder="Email" />
           </FormGroup>
 
           <FormGroup>
-            <FormControl type="password" placeholder="Password" />
+            <Field name="password" component="input" className="form-control" type="password" placeholder="Password" />
           </FormGroup>
 
           <FormGroup>
             <Button type="submit" block>
-              Sign in
+              Sign Up
             </Button>
           </FormGroup>
         </Form>
@@ -29,4 +43,10 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps)(form(Signup));
