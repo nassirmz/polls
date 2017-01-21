@@ -18,7 +18,7 @@ export function authFailure(errorMessage) {
   };
 }
 
-export function signup(userCredentials) {
+export function startSignup(userCredentials) {
   return (dispatch) => {
     axios.post('/users', userCredentials)
     .then((resp) => {
