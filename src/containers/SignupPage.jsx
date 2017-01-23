@@ -6,7 +6,7 @@ import { startSignup } from '../actions/authActions';
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
-  errorMessage: PropTypes.object,
+  errorMessage: PropTypes.string,
 };
 
 class SignupPage extends Component {

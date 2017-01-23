@@ -1,20 +1,33 @@
 import React, { Component, PropTypes } from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
+
+import { startSignout } from '../actions/authActions';
 
 const propTypes = {
   authenticated: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 class Header extends Component {
+  constructor() {
+    super();
+    this.onSubmitLogout = this.onSubmitLogout.bind(this);
+  }
+
+  onSubmitLogout() {
+    this.props.dispatch(startSignout());
+  }
+
   renderLinks() {
     if (this.props.authenticated) {
       return (
         <Nav pullRight className="header-column">
-          <NavItem href="#/signout">Sign Out</NavItem>
+          <Button onClick={this.onSubmitLogout}>Sign Out</Button>
         </Nav>
       );
     }
+
     return (
       <Nav pullRight className="header-column">
         <NavItem href="#/signup">Sign Up</NavItem>
