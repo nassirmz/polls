@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
 import Header from 'Header';
-import Signup from 'Signup';
 
 const propTypes = {
-  children: PropTypes.element.isReguired,
+  children: PropTypes.node,
 };
 
 class App extends Component {

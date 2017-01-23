@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { Form, FormGroup, Col, Button, Alert } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 
+import ErrorDisplay from 'ErrorDisplay';
+
 
 const form = reduxForm({
   form: 'signup',
@@ -14,7 +16,6 @@ const propTypes = {
 
 const renderAlert = (errorMessage) => {
   if (errorMessage) {
-    console.log(errorMessage);
     return (
       <Alert bsStyle="danger">
         {errorMessage}
@@ -40,7 +41,7 @@ const Signup = ({ handleSubmit, auth }) => {
         </FormGroup>
 
         <FormGroup>
-          {renderAlert(auth.errorMessage)}
+          <ErrorDisplay errorMessage={auth.errorMessage} />
           <Button type="submit" block>
             Sign Up
           </Button>
