@@ -11,6 +11,7 @@ class ErrorDispaly extends Component {
     this.state = {
       alertVisible: true,
     };
+    this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
   }
 
   handleAlertDismiss() {
@@ -20,7 +21,7 @@ class ErrorDispaly extends Component {
   render() {
     if (this.state.alertVisible && this.props.errorMessage) {
       return (
-        <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss.bind(this)}>
+        <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
           <p>{this.props.errorMessage}</p>
         </Alert>
       );
