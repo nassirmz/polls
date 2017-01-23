@@ -11,7 +11,7 @@ const form = reduxForm({
 
 const propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  errorMessage: PropTypes.object,
+  errorMessage: PropTypes.string,
 };
 
 const Signup = ({ handleSubmit, errorMessage }) => {

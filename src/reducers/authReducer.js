@@ -1,4 +1,4 @@
-import { AUTH_SUCCESS, AUTH_FAILURE } from '../constants/ActionTypes';
+import { AUTH_SUCCESS, AUTH_FAILURE, LOGOUT } from '../constants/ActionTypes';
 
 const authState = {
   authenticated: false,
@@ -18,6 +18,11 @@ export default function authReducer(state = authState, action) {
       return {
         ...state,
         errorMessage: action.errorMessage,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        authenticated: action.authenticated,
       };
     default:
       return state;
