@@ -7,5 +7,5 @@ module.exports = (app) => {
   app.route('/users/login')
     .post(user.loginUser);
   app.route('/users/logout')
-    .get(user.logoutUser);
+    .get(user.checkAuth, user.logoutUser);
 };
