@@ -6,7 +6,7 @@ import { startSignup } from '../actions/authActions';
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
-  auth: PropTypes.object,
+  errorMessage: PropTypes.object,
 };
 
 class SignupPage extends Component {
@@ -16,14 +16,14 @@ class SignupPage extends Component {
 
   render() {
     return (
-      <Signup onSubmit={this.handleSubmit} auth={this.props.auth} />
+      <Signup onSubmit={this.handleSubmit} errorMessage={this.props.errorMessage} />
     );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth,
+    errorMessage: state.auth.errorMessage,
   };
 }
 

@@ -1,8 +1,28 @@
-import React, { Component } from 'react';
-// import { Link } from 'react-router';
+import React, { Component, PropTypes } from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { connect } from 'react-redux';
+
+const propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+};
 
 class Header extends Component {
+  renderLinks() {
+    if (this.props.authenticated) {
+      return (
+        <Nav pullRight className="header-column">
+          <NavItem href="#/signout">Sign Out</NavItem>
+        </Nav>
+      );
+    }
+    return (
+      <Nav pullRight className="header-column">
+        <NavItem href="#/signup">Sign Up</NavItem>
+        <NavItem href="#/signin">Sign In</NavItem>
+      </Nav>
+    );
+  }
+
   render() {
     return (
       <Navbar>
@@ -11,13 +31,18 @@ class Header extends Component {
             <p>POLLS DIGEST</p>
           </Navbar.Brand>
         </Navbar.Header>
-        <Nav pullRight className="header-column">
-          <NavItem href="#/signup">Sign Up</NavItem>
-          <NavItem href="#/signin">Sign In</NavItem>
-        </Nav>
+        {this.renderLinks()}
       </Navbar>
     );
   }
 }
 
-export default Header;
+Header.propTypes = propTypes;
+
+function mapStateToProps(state) {
+  return {
+    authenticated: state.auth.authenticated,
+  };
+}
+
+export default connect(mapStateToProps)(Header);
