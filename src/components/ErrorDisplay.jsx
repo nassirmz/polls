@@ -6,8 +6,8 @@ const propTypes = {
 };
 
 class ErrorDispaly extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor() {
+    super();
     this.state = {
       alertVisible: true,
     };
