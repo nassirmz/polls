@@ -27,7 +27,7 @@ export function startSignup(userCredentials) {
       hashHistory.push('/polls');
     })
     .catch(() => {
-      dispatch.authFailure('Email is unavailable');
+      dispatch(authFailure('Email is unavailable'));
     });
   };
 }

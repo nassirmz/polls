@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Signup from 'Signup';
+import Signup from '../components/Signup';
 import { startSignup } from '../actions/authActions';
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
+  auth: PropTypes.object,
 };
 
 class SignupPage extends Component {
@@ -15,7 +16,7 @@ class SignupPage extends Component {
 
   render() {
     return (
-      <Signup onSubmit={this.handleSubmit} />
+      <Signup onSubmit={this.handleSubmit} auth={this.props.auth} />
     );
   }
 }

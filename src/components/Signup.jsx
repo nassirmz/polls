@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, FormGroup, Col, Button } from 'react-bootstrap';
+import { Form, FormGroup, Col, Button, Alert } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 
 
@@ -9,9 +9,21 @@ const form = reduxForm({
 
 const propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  auth: PropTypes.object,
 };
 
-const Signup = ({ handleSubmit }) => {
+const renderAlert = (errorMessage) => {
+  if (errorMessage) {
+    console.log(errorMessage);
+    return (
+      <Alert bsStyle="danger">
+        {errorMessage}
+      </Alert>
+    );
+  }
+};
+
+const Signup = ({ handleSubmit, auth }) => {
   return (
     <Col className="auth-container" sm={4} smOffset={4}>
       <Form horizontal onSubmit={handleSubmit}>
@@ -28,6 +40,7 @@ const Signup = ({ handleSubmit }) => {
         </FormGroup>
 
         <FormGroup>
+          {renderAlert(auth.errorMessage)}
           <Button type="submit" block>
             Sign Up
           </Button>
