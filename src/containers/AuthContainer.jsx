@@ -1,28 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { ownProps, hashHistory, setRedirectUrl } from 'react-router';
+import { hashHistory } from 'react-router';
 
 
 const propTypes = {
-  dispatch: PropTypes.func.isRequired,
   authenticated: PropTypes.bool,
-  currenURL: PropTypes.string,
   children: PropTypes.node,
 };
 
 class AuthContainer extends Component {
   componentDidMount() {
-    const { dispatch, currenURL, authenticated } = this.props;
+    const { authenticated } = this.props;
 
     if (!authenticated) {
-      dispatch(setRedirectUrl(currenURL));
       hashHistory.replace('/signup');
     }
   }
-  remder() {
-    const { authenticated } = this.props;
+
+  render() {
+    const { authenticated, children } = this.props;
     if (authenticated) {
-      return this.props.children;
+      return (
+        <div>
+          {children}
+        </div>
+      );
     }
     return null;
   }
@@ -30,7 +32,7 @@ class AuthContainer extends Component {
 }
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     authenticated: state.auth.authenticated,
     currenURL: ownProps.location.pathname,
