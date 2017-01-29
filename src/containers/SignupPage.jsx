@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Signup from '../components/Signup';
-import { startSignup } from '../actions/authActions';
+import { startSignup, resetErrorMessage } from '../actions/authActions';
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -10,6 +10,10 @@ const propTypes = {
 };
 
 class SignupPage extends Component {
+  componentWillUnmount() {
+    this.props.dispatch(resetErrorMessage());
+  }
+
   handleSubmit = (values) => {
     this.props.dispatch(startSignup(values));
   }
