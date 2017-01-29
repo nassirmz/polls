@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { startSignout } from '../actions/authActions';
@@ -23,7 +23,7 @@ class Header extends Component {
     if (this.props.authenticated) {
       return (
         <Nav pullRight className="header-column">
-          <Button onClick={this.onSubmitLogout}>Sign Out</Button>
+          <NavItem onClick={this.onSubmitLogout}>Sign Out</NavItem>
         </Nav>
       );
     }
