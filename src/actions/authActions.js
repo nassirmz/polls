@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { hashHistory } from 'react-router';
 
-import { AUTH_SUCCESS, AUTH_FAILURE, LOGOUT } from '../constants/ActionTypes';
+import { AUTH_SUCCESS, AUTH_FAILURE, LOGOUT, RESET_ERROR_MESSAGE } from '../constants/ActionTypes';
 
 export function authSuccess(name) {
   return {
@@ -48,5 +48,12 @@ export function startSignout() {
         dispatch(userLogout());
         hashHistory.push('/');
       });
+  };
+}
+
+export function resetErrorMessage() {
+  return {
+    type: RESET_ERROR_MESSAGE,
+    errorMessage: '',
   };
 }
