@@ -1,3 +1,4 @@
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const LOGOUT = 'LOGOUT';
+export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE';
