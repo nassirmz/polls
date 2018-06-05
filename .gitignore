@@ -6,3 +6,5 @@ npm-debug.log*
 
 # bundle file
 public/bundle.js
+
+.idea/

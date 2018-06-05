@@ -13,7 +13,7 @@ class AuthContainer extends Component {
     const { authenticated } = this.props;
 
     if (!authenticated) {
-      hashHistory.replace('/signup');
+      hashHistory.replace('/signin');
     }
   }
 
